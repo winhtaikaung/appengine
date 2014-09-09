@@ -1,0 +1,77 @@
+<strong>R1</strong>
+
+<select ng-change="get_selection()" ng-model="maptype" ng-options="map_ty.map as map_ty.map for map_ty in maptypes track by map_ty.id" >
+		    
+			      		      		<option value=""> choose color </option>			
+			      	
+</select>
+<strong>Favourite Maps</strong>
+<select  ng-model="selected_favourite" ng-change="get_favourite(selected_favourite)"  ng-options="fav_item.name for fav_item in favourite track by fav_item.id" >
+                
+                                                      <option value="">FavouriteMaps</option>              
+                              
+</select>
+<strong>Indicators</strong>
+<select  ng-model="selected_indicator" ng-change="get_selected_indicator(selected_indicator)"  ng-options="indicator.name for indicator in indicators_list track by indicator.id" >
+                
+                                                      <option value="">Indicators</option>              
+                              
+</select>
+<strong>Tables list</strong>
+<select  ng-model="selected_table" ng-change="get_selected_table(selected_table)"  ng-options="rep_table.name for rep_table in table_list track by rep_table.id" >
+                
+                                                      <option value="">Report Table</option>              
+                              
+</select>
+<strong>Dashboard  list</strong>
+
+<select  ng-model="selected_dashboard" ng-change="get_selected_dashboard(selected_dashboard)"  ng-options="rep_table.name for rep_table in dashboards_list track by rep_table.id" >
+                
+                                                      <option value="">Report Table</option>              
+                              
+</select>
+<strong>Dashboard  list</strong>
+
+
+
+<!--select ng-model="selected_dashboard" ng-change="get_selected_dashboard(selected_dashboard)"  ng-options="rep_table.name for rep_table in dashboard_list track by rep_table.id">
+    
+    <option value="">Dashboards</option>
+    
+    
+    
+</select-->
+
+
+
+
+
+
+
+<input type="file" onChange="angular.element(this).scope().make_alert(this)" >
+
+
+<input type="text" placeholder="Enter URL to grab data" ng-model="url" ng-show=visible>
+
+<textarea ng-model="geojson" id="G_json" rows=20 ></textarea>
+
+
+<br>
+<!--script>
+	$(function(){
+
+		$.ajax({
+            crossDomain: true,
+            type:"GET",
+            contentType: "application/json; charset=utf-8",
+            async:false,
+            url: "http://localhost:8082/api/analytics.jsonp?callback?dimension=dx:g5y4gE5evOA&dimension=pe:2011&dimension=ou:IWp9dQGM0bS;OU_GROUP-jblbYwuvO33",
+            dataType: "jsonp",                
+            jsonpCallback: function(data){
+            		console.log(data);
+            }
+        });
+	});
+	</script-->
+
+<button ng-click="save()">Generate Map</button>

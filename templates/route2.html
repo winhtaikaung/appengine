@@ -1,0 +1,17 @@
+
+ <select>
+      <option>Select Indicators</option>
+      	<optgroup label="Indicators">
+      			<option ng-repeat="indicator in indicators">
+      				{{indicator.name}}
+
+      			</option>
+      				
+
+      	</optgroup>
+      </select> 
+      <input type ="text" ng-model="ind_name"/>
+<button ng-click="addnewindicators()">New indicators</button>
+
+
+
