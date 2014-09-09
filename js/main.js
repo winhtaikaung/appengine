@@ -306,17 +306,25 @@ function mapgen_controller($scope,storage,String_helper,Ajax_helper,File_Helper,
        $scope.get_selected_dashboard=function(item){
            
            Ajax_helper.async(item.href+".json").then(function(d){
-                   // console.log(d.items);
+                    //console.log(d.items);
                      for(i=0;i<d.items.length;i++){
                                                  
                          switch(d.items[i].type){
                                 
                                     case "reportTable":
                                             
-                                       // console.log(d.items[i].reportTable);
+                                      // console.log(d.items[i].reportTable.href);
+                                       Ajax_helper.async(d.items[i].reportTable.href+"/data.html").then(function(table){
+                                           console.log(table);
+                                       });
+                                       
                                         break;
                                     case "chart":
                                          //console.log(d.items[i].chart);
+                                         
+                                         Img_converter.encode(d.items[i].chart.href+"/data?width=405&height=294",function(base64Img){
+                                             console.log(base64Img);
+                                         });
                                         break;
                                     case "map":                                                                             
                                          
