@@ -1,6 +1,6 @@
 <strong>R1</strong>
 
-<select ng-change="get_selection()" ng-model="maptype" ng-options="map_ty.map as map_ty.map for map_ty in maptypes track by map_ty.id" >
+<!--select ng-change="get_selection()" ng-model="maptype" ng-options="map_ty.map as map_ty.map for map_ty in maptypes track by map_ty.id" >
 		    
 			      		      		<option value=""> choose color </option>			
 			      	
@@ -22,13 +22,20 @@
                 
                                                       <option value="">Report Table</option>              
                               
-</select>
+</select-->
 <strong>Dashboard  list</strong>
 
-<select  ng-model="selected_dashboard" ng-change="get_selected_dashboard(selected_dashboard)"  ng-options="rep_table.name for rep_table in dashboards_list track by rep_table.id" >
+<select  size="3"  ng-model="selected_dashboard" ng-change="get_selected_dashboard(selected_dashboard)"  ng-options="rep_table.name for rep_table in dashboards_list track by rep_table.id" >
                 
-                                                      <option value="">Report Table</option>              
+    <option value="" disabled="">Report Table</option>              
                               
+</select>
+<input type="button" value="Add" ng-click="adddashboard()"/>
+<input type="button" value="Clear" ng-click="clear_db()"/>
+
+
+<select size="3" ng-model="temp_selcted" ng-options="rep_table.name for rep_table in temp_list track by rep_table.id" >
+    <option value="" disabled="">Nothing</option>
 </select>
 <strong>Dashboard  list</strong>
 
@@ -53,7 +60,9 @@
 
 <input type="text" placeholder="Enter URL to grab data" ng-model="url" ng-show=visible>
 
-<textarea ng-model="geojson" id="G_json" rows=20 ></textarea>
+
+
+<div id="G_json" style="border:1px solid gray;height:20em;border-radius: 3px;overflow: auto;"></div>
 
 
 <br>
