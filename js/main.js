@@ -303,38 +303,63 @@ function mapgen_controller($scope,storage,String_helper,Ajax_helper,File_Helper,
 
        }
        
+       var page=new Array();
+      
+       var dashboard_item;
+       
+       
        $scope.get_selected_dashboard=function(item){
            
            Ajax_helper.async(item.href+".json").then(function(d){
-                    //console.log(d.items);
+                    console.log(d.items);
+                     
+                     
                      for(i=0;i<d.items.length;i++){
-                                                 
+                                             
                          switch(d.items[i].type){
-                                
-                                    case "reportTable":
+                                     
+                                 
+                                    case 'reportTable':
                                             
                                       // console.log(d.items[i].reportTable.href);
-                                       Ajax_helper.async(d.items[i].reportTable.href+"/data.html").then(function(table){
-                                           console.log(table);
+                                       Ajax_helper.async(d.items[i].reportTable.href+"/data.html").then(function(table_html){
+                                           console.log(i);
+                                          //console.log(d.items[i].reportTable.name);
+                                           var dashboard=new Object();
+                                           dashboard.table=table_html; 
+                                           page.push(dashboard);
+                                      console.log(page);
+                                           
                                        });
                                        
                                         break;
-                                    case "chart":
+                                    case 'chart':
                                          //console.log(d.items[i].chart);
                                          
-                                         Img_converter.encode(d.items[i].chart.href+"/data?width=405&height=294",function(base64Img){
-                                             console.log(base64Img);
+                                         Img_converter.encode(d.items[i].chart.href+"/data?width=405&height=294",function(chartimg){
+                                             //console.log(base64Img);
+                                             var dashboard=new Object();
+                                             dashboard.chart=chartimg;
+                                             page.push(dashboard);
+                                             
                                          });
+                                         console.log(page);
                                         break;
-                                    case "map":                                                                             
+                                    case 'map':                                                                             
                                          
-                                          Img_converter.encode(d.items[i].map.href+"/data?width=405&height=294",function(base64Img){
-                                                    console.log(base64Img);
+                                          Img_converter.encode(d.items[i].map.href+"/data?width=405&height=294",function(mapimg){
+                                              var dashboard=new Object();
+                                                dashboard.map=mapimg;
+                                                page.push(dashboard);
+                                              
                                           });
-                                         
+                                         console.log(page);
                                         break;
+                                        
+                                        
                              
                          }
+                        
                          
                      }
            });
@@ -385,10 +410,7 @@ function mapgen_controller($scope,storage,String_helper,Ajax_helper,File_Helper,
     $scope.save=function(obj){
         var leaflet_lib={
                     css:{
-                        maincss:"<link rel=stylesheet href=http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css\>",
-                        custom_css:"#map{width:800px;height:400px;}",
-                        legend_css:".info{padding:6px 8px;font:14px/16px Arial,Helvetica,sans-serif;background:#fff;background:rgba(255,255,255,0.8);box-shadow:0 0 15px rgba(0,0,0,0.2);border-radius:5px}.info h4{margin:0 0 5px;color:#777}.legend{text-align:left;line-height:18px;color:#555}.legend i{width:18px;height:18px;float:left;margin-right:8px;opacity:.7}"
-                      
+                        legend_css:".item{border: 1px solid #ccc;width: 405px;height: 329px;padding: 6px;margin: 0 19px 19px 0;border-radius: 3px;cursor: pointer;box-shadow: #ddd 0 1px 2px 0;overflow: auto;}"                      
                     },
                     js:{
                         mainjs:"\n\<script src=http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js\>\<\/script>"
@@ -403,7 +425,7 @@ function mapgen_controller($scope,storage,String_helper,Ajax_helper,File_Helper,
        // console.log(leaflet_lib.process);
 //console.log(String_helper.trim_str(JSON.stringify(leaflet_lib.process)));
         
-        angular.element("#G_json").val("<html>\n<head>"+leaflet_lib.css.maincss+"\n"+leaflet_lib.js.mainjs+"<style>"+leaflet_lib.css.custom_css+"\n"+leaflet_lib.css.legend_css+"</style></head>\n<body><div id=map></div><script>\nvar statesData="+JSON.stringify(leaflet_lib.geojson)+";\n\n"+leaflet_lib.process+"\n</script></body>\n</html>");
+        angular.element("#G_json").val(leaflet_lib+"");
         
         storage.remove('test');
         storage.bind($scope, 'test',JSON.stringify(page));
