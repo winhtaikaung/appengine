@@ -51,7 +51,7 @@
       	<div ng-view></div>
 
   
-<!--label for="filename">Filename</label><br />
+<label for="filename">Filename</label><br />
 				<input type="text" name="filename" value="testfile.txt" id="filename" />
 			</p>
 			<p>
@@ -72,7 +72,8 @@ Whatever you put in this text box will be downloaded and saved in the file. If y
 						return document.getElementById('filename').value;
 					},
 					data: function(){ 
-						return document.getElementById('data').value;
+                                            console.log(document.getElementById('G_json').textContent);
+						return document.getElementById('G_json').textContent;
 					},
 					onComplete: function(){ alert('Your File Has Been Saved!'); },
 					onCancel: function(){ alert('You have cancelled the saving of this file.'); },
@@ -92,7 +93,7 @@ Whatever you put in this text box will be downloaded and saved in the file. If y
             
 		<script type="text/javascript">
 		window.onload=load();
-		</script-->
+		</script>
 		
 		
 
