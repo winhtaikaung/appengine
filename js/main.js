@@ -280,6 +280,7 @@ function mapgen_controller($scope,storage,String_helper,Ajax_helper,File_Helper,
       
      $scope.dashboards_list=JSON.parse(storage.get('dashboard_list')).dashboards;
      
+     storage.remove('Web_page');
    
    $scope.temp_list=null;
      
@@ -330,11 +331,12 @@ function mapgen_controller($scope,storage,String_helper,Ajax_helper,File_Helper,
                                             
                                       // console.log(d.items[i].reportTable.href);
                                        Ajax_helper.async(d.items[i].reportTable.href+"/data.html").then(function(table_html){
-                                          
+                                          console.log();
                                           //console.log(d.items[i].reportTable.name);
                                            var dashboarditem=new Object();
                                            dashboarditem.table=table_html;
                                            dashboarditem.type="table";
+                                           dashboarditem.name=d.name
                                            page.push(dashboarditem);
                                            
                                         storage.remove('selected_item');
@@ -352,6 +354,7 @@ function mapgen_controller($scope,storage,String_helper,Ajax_helper,File_Helper,
                                              var dashboarditem=new Object();
                                              dashboarditem.chart=chartimg;
                                               dashboarditem.type="chart";
+                                              dashboarditem.name=d.name;
                                              page.push(dashboarditem);
                                              
                                              storage.remove('selected_item');
@@ -367,6 +370,7 @@ function mapgen_controller($scope,storage,String_helper,Ajax_helper,File_Helper,
                                               var dashboarditem=new Object();
                                                 dashboarditem.map=mapimg; 
                                                  dashboarditem.type="map";
+                                                 dashboarditem.name=d.name;
                                                 page.push(dashboarditem);
                                                 
                                                 storage.remove('selected_item');
@@ -437,9 +441,10 @@ function mapgen_controller($scope,storage,String_helper,Ajax_helper,File_Helper,
     var site={
                     css:{
                         item:".item{border: 1px solid #ccc;width: 405px;height: 329px;padding: 6px;margin: 0 19px 19px 0;border-radius: 3px;cursor: pointer;box-shadow: #ddd 0 1px 2px 0;overflow: auto;}",
-                        item_h3:".item h3 {font-size: 12px;font-family: LiberationSansBold, sans-serif;color: #39547d;margin: 2px 5px;}",
-                        li:"li{float:left}",
-                        listtable:".listTable {width: 100%;border-collapse: collapse;padding-top: 10px;cursor: pointer;}"
+                        item_h3:"h3,h4{font-size: 12px;font-family: LiberationSansBold, sans-serif;color: #39547d;margin: 2px 5px;}",
+                        li:"li{float: left;width: 400px;height: 325px;overflow: auto;margin: 1em 0.5em 0.5em 0.5em;border-radius: 10px;border: 1px solid gray;}",
+                        listtable:".listTable {width: 100%;border-collapse: collapse;padding-top: 10px;cursor: pointer;}",
+                        table:"th{font-family: LiberationSansBold, sans-serif;color: #39547d;margin: 2px 5px;}td{font-family: LiberationSansBold, sans-serif;margin: 2px 5px;}"
                     },
                     header:{
                         nav:""
@@ -449,17 +454,25 @@ function mapgen_controller($scope,storage,String_helper,Ajax_helper,File_Helper,
     $scope.save=function(){
         
         var web_page=JSON.parse(storage.get('Web_page'));
-        console.log(web_page);
+        console.log(web_page[0].element[0].name);
+         angular.element("#G_json").append(document.createTextNode("<style>"));
+         angular.element("#G_json").append(document.createTextNode(site.css.item));
+         angular.element("#G_json").append(document.createTextNode(site.css.item_h3));
+         angular.element("#G_json").append(document.createTextNode(site.css.li));
+         angular.element("#G_json").append(document.createTextNode(site.css.listtable));
+         angular.element("#G_json").append(document.createTextNode(site.css.table));
+         
+          angular.element("#G_json").append(document.createTextNode("</style>"));
        if(web_page.length>0){
             for(outer_index=0;outer_index<web_page.length;outer_index++){
                 //section for each dashboard
-               angular.element("#G_json").append(document.createTextNode("<section>\n\n"));   
+               angular.element("#G_json").append(document.createTextNode("<section id="+web_page[outer_index].element[outer_index].name+">\n\n"));   
                angular.element("#G_json").append(document.createTextNode("<br>")); 
                //binding 
                   angular.element("#G_json").append(document.createTextNode("<ul>")); 
                   
                     for(j=0;j<web_page[outer_index].element.length;j++){
-                        angular.element("#G_json").append(document.createTextNode("<li>"));  
+                        angular.element("#G_json").append(document.createTextNode("<li class=liItem>"));  
                             
                             console.log(web_page[outer_index].element[j]);
                             
