@@ -457,9 +457,13 @@ function mapgen_controller($scope,storage,String_helper,Ajax_helper,File_Helper,
                 };
 
     $scope.save=function(){
-        
+       
         var web_page=JSON.parse(storage.get('Web_page'));
         console.log(web_page[0].element[0].name);
+        angular.element("#G_json").append(document.createTextNode("<title>"));
+        angular.element("#G_json").append(document.createTextNode($scope.title));
+        angular.element("#G_json").append(document.createTextNode("</title>"));
+        
         //declaring css
          angular.element("#G_json").append(document.createTextNode("<style>"));
          angular.element("#G_json").append(document.createTextNode(site.css.nav));
