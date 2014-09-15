@@ -257,10 +257,12 @@ function mapgen_controller($scope,storage,String_helper,Ajax_helper,File_Helper,
       });
       
       
-      var dashboard_path=window.location.origin+"/api/dashboards.json";
+      var dashboard_path=GLOBAL_URL+"api/dashboards.json";
       
+
       Ajax_helper.async(dashboard_path).then(function(d){
-          
+        console.log(dashboard_path);
+          console.log(GLOBAL_URL);
           storage.remove('dashboard_list');
           storage.bind($scope,'dashboard_list',JSON.stringify(d));
       });
@@ -543,8 +545,15 @@ function mapgen_controller($scope,storage,String_helper,Ajax_helper,File_Helper,
     };
     
     $scope.clear_db=function(){
+
+
           
         storage.remove('Web_page');
+        storage.remove('fav_list');
+        storage.remove('indicators_List');
+        storage.remove('report_table_list');
+        storage.remove('dashboard_list');
+        storage.remove('selected_item');
         
     }
 }
