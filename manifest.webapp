@@ -1,6 +1,6 @@
 {
-   "name" : "HTML Generator",
-   "description" : "Generate HTML FROM DHIS",
+   "name" : "Dashboard Generator",
+   "description" : "Generate Single page Dash Board generator",
    "version" : "1.0",
    "developer" : {
       "email" : "winhtaikanug28@hotmail.com",
